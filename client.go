@@ -112,8 +112,9 @@ func (c *Client) Do(req *Request) (*Response, error) {
 		if err != nil {
 			return nil, err
 		}
+	} else {
+		c.Unlock()
 	}
-	c.Unlock()
 	// Check the required capabilities before making the request
 	for _, uri := range req.Using {
 		c.Lock()
