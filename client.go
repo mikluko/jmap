@@ -192,6 +192,8 @@ func (c *Client) UploadWithContext(
 		if err != nil {
 			return nil, err
 		}
+
+		c.Lock()
 	}
 
 	url := strings.ReplaceAll(c.Session.UploadURL, "{accountId}", string(accountID))
@@ -246,6 +248,8 @@ func (c *Client) DownloadWithContext(
 		if err != nil {
 			return nil, err
 		}
+
+		c.Lock()
 	}
 
 	urlRepl := strings.NewReplacer(
