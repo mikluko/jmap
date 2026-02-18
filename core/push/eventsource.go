@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"strings"
 
-	"git.sr.ht/~rockorager/go-jmap"
+	"github.com/mikluko/jmap"
 )
 
 // A subscription to an event stream

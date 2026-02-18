@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"git.sr.ht/~rockorager/go-jmap"
+	"github.com/mikluko/jmap"
 )
 
 const URI jmap.URI = "urn:ietf:params:jmap:vacationresponse"

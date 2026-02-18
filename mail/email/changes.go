@@ -1,8 +1,8 @@
 package email
 
 import (
-	"git.sr.ht/~rockorager/go-jmap"
-	"git.sr.ht/~rockorager/go-jmap/mail"
+	"github.com/mikluko/jmap"
+	"github.com/mikluko/jmap/mail"
 )
 
 // Get changes to emails on the whole account since a given state

@@ -1,8 +1,8 @@
 package email
 
 import (
-	"git.sr.ht/~rockorager/go-jmap"
-	"git.sr.ht/~rockorager/go-jmap/mail"
+	"github.com/mikluko/jmap"
+	"github.com/mikluko/jmap/mail"
 )
 
 // Get list of email IDs based on filter and sort criteria

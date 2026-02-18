@@ -1,4 +1,4 @@
-# go-jmap
+# jmap
 
 A JMAP client library. Includes support for all core functionality (including
 PushSubscription and EventSource event streams), mail, smime-verify, and MDN 
@@ -16,10 +16,10 @@ package main
 import (
 	"fmt"
 
-	"git.sr.ht/~rockorager/go-jmap"
-	"git.sr.ht/~rockorager/go-jmap/mail"
-	"git.sr.ht/~rockorager/go-jmap/mail/email"
-	"git.sr.ht/~rockorager/go-jmap/mail/mailbox"
+	"github.com/mikluko/jmap"
+	"github.com/mikluko/jmap/mail"
+	"github.com/mikluko/jmap/mail/email"
+	"github.com/mikluko/jmap/mail/mailbox"
 )
 
 func main() {

@@ -1,6 +1,6 @@
 package emailsubmission
 
-import "git.sr.ht/~rockorager/go-jmap"
+import "github.com/mikluko/jmap"
 
 type SortComparator struct {
 	Property string `json:"property,omitempty"`

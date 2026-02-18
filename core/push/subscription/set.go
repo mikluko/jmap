@@ -1,7 +1,7 @@
 package subscription
 
 import (
-	"git.sr.ht/~rockorager/go-jmap"
+	"github.com/mikluko/jmap"
 )
 
 // Modify push subscription details

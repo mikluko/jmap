@@ -1,6 +1,6 @@
 package mdn
 
-import "git.sr.ht/~rockorager/go-jmap"
+import "github.com/mikluko/jmap"
 
 const URI jmap.URI = "urn:ietf:params:jmap:mdn"
 

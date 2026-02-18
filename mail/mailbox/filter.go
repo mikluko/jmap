@@ -1,6 +1,6 @@
 package mailbox
 
-import "git.sr.ht/~rockorager/go-jmap"
+import "github.com/mikluko/jmap"
 
 type Filter interface {
 	implementsFilter()

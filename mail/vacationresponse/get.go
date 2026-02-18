@@ -1,8 +1,8 @@
 package vacationresponse
 
 import (
-	"git.sr.ht/~rockorager/go-jmap"
-	"git.sr.ht/~rockorager/go-jmap/mail"
+	"github.com/mikluko/jmap"
+	"github.com/mikluko/jmap/mail"
 )
 
 // Get vacation response details

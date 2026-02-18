@@ -1,6 +1,6 @@
 package thread
 
-import "git.sr.ht/~rockorager/go-jmap"
+import "github.com/mikluko/jmap"
 
 func init() {
 	jmap.RegisterMethod("Thread/get", newGetResponse)

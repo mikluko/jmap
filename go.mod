@@ -1,10 +1,10 @@
-module git.sr.ht/~rockorager/go-jmap
+module github.com/mikluko/jmap
 
-go 1.23.0
+go 1.24.0
 
 require (
 	github.com/stretchr/testify v1.8.0
-	golang.org/x/oauth2 v0.27.0
+	golang.org/x/oauth2 v0.35.0
 )
 
 require (
