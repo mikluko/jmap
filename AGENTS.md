@@ -1,17 +1,12 @@
 # AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI coding agents when working with code in this repository.
 
 ## Overview
 
-This is `go-jmap`, a Go client library for the JMAP protocol (JSON Meta Application Protocol). It implements:
-- **Core** (RFC 8620) - complete
-- **Mail** (RFC 8621) - complete
-- **MDN** (RFC 9007) - complete
-- **S/MIME** (RFC 9219) - complete
-- **WebSocket** (RFC 8887) - not started
+Fork of `git.sr.ht/~rockorager/go-jmap` — a Go client library for the JMAP protocol (JSON Meta Application Protocol). The go module path still references the upstream sourcehut path.
 
-Module path: `git.sr.ht/~rockorager/go-jmap`
+Implements: Core (RFC 8620), Mail (RFC 8621), MDN (RFC 9007), S/MIME (RFC 9219). WebSocket (RFC 8887) is not started.
 
 ## Build & Test
 
