@@ -14,18 +14,6 @@ jobs:
       id-token: write
 
     steps:
-      - name: Dismiss stale Claude reviews
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api "repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews" \
-            --jq '.[] | select(.user.login == "claude-code[bot]" or .user.login == "github-actions[bot]") | select(.state == "CHANGES_REQUESTED" or .state == "COMMENTED") | .id' \
-          | while read -r review_id; do
-              gh api --method PUT \
-                "repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews/${review_id}/dismissals" \
-                -f message="Superseded by new review" || true
-            done
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -39,3 +27,16 @@ jobs:
           plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
           plugins: 'code-review@claude-code-plugins'
           prompt: '/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
+
+      - name: Dismiss stale Claude reviews
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews" \
+            --jq '[.[] | select(.user.login == "claude-code[bot]" or .user.login == "github-actions[bot]") | select(.state == "CHANGES_REQUESTED" or .state == "COMMENTED") | .id] | .[:-1][]' \
+          | while read -r review_id; do
+              gh api --method PUT \
+                "repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews/${review_id}/dismissals" \
+                -f message="Superseded by new review" || true
+            done
