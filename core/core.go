@@ -1,6 +1,6 @@
 package core
 
-import "git.sr.ht/~rockorager/go-jmap"
+import "github.com/mikluko/jmap"
 
 func init() {
 	jmap.RegisterCapability(&Core{})

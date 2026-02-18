@@ -1,6 +1,6 @@
 package blob
 
-import "git.sr.ht/~rockorager/go-jmap"
+import "github.com/mikluko/jmap"
 
 func init() {
 	jmap.RegisterMethod("Blob/copy", newCopyResponse)

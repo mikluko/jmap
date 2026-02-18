@@ -3,11 +3,11 @@ package jmap_test
 import (
 	"fmt"
 
-	"git.sr.ht/~rockorager/go-jmap"
-	"git.sr.ht/~rockorager/go-jmap/core/push"
-	"git.sr.ht/~rockorager/go-jmap/mail"
-	"git.sr.ht/~rockorager/go-jmap/mail/email"
-	"git.sr.ht/~rockorager/go-jmap/mail/mailbox"
+	"github.com/mikluko/jmap"
+	"github.com/mikluko/jmap/core/push"
+	"github.com/mikluko/jmap/mail"
+	"github.com/mikluko/jmap/mail/email"
+	"github.com/mikluko/jmap/mail/mailbox"
 )
 
 // Basic usage of the client, with chaining of methods

@@ -1,4 +1,4 @@
-module git.sr.ht/~rockorager/go-jmap
+module github.com/mikluko/jmap
 
 go 1.19
 
