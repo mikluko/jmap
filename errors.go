@@ -59,4 +59,8 @@ type SetError struct {
 	// Properties is available on InvalidProperties SetErrors and lists the
 	// individual properties were
 	Properties *[]string `json:"properties,omitempty"`
+
+	// ExistingID is returned when the SetError type is "alreadyExists" to
+	// indicate the ID of the existing record that matches
+	ExistingID *ID `json:"existingId,omitempty"`
 }
