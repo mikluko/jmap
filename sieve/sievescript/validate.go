@@ -1,8 +1,8 @@
 package sievescript
 
 import (
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/sieve"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/sieve"
 )
 
 type Validate struct {
@@ -14,7 +14,7 @@ func (m *Validate) Name() string         { return "SieveScript/validate" }
 func (m *Validate) Requires() []jmap.URI { return []jmap.URI{sieve.URI} }
 
 type ValidateResponse struct {
-	Account jmap.ID       `json:"accountId,omitempty"`
+	Account jmap.ID        `json:"accountId,omitempty"`
 	Error   *jmap.SetError `json:"error"`
 }
 

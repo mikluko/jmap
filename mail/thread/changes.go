@@ -1,8 +1,8 @@
 package thread
 
 import (
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/mail"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/mail"
 )
 
 // See RFC8621, Section 3.2.

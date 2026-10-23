@@ -1,4 +1,4 @@
-module github.com/mikluko/jmap
+module sarak.sh/mikluko/jmap
 
 go 1.24.0
 

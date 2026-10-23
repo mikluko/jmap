@@ -1,6 +1,6 @@
 package sievescript
 
-import "github.com/mikluko/jmap"
+import "sarak.sh/mikluko/jmap"
 
 type Filter interface {
 	implementsFilter()

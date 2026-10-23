@@ -1,8 +1,8 @@
 package emailsubmission
 
 import (
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/mail"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/mail"
 )
 
 // Create, delete or modify an email submission

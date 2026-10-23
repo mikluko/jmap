@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/mikluko/jmap"
+	"sarak.sh/mikluko/jmap"
 )
 
 const URI jmap.URI = "urn:ietf:params:jmap:submission"

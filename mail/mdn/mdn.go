@@ -1,6 +1,6 @@
 package mdn
 
-import "github.com/mikluko/jmap"
+import "sarak.sh/mikluko/jmap"
 
 const URI jmap.URI = "urn:ietf:params:jmap:mdn"
 

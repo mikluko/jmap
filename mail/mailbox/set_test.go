@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/mikluko/jmap"
 	"github.com/stretchr/testify/assert"
+	"sarak.sh/mikluko/jmap"
 )
 
 func TestSet(t *testing.T) {

@@ -1,6 +1,6 @@
 package core
 
-import "github.com/mikluko/jmap"
+import "sarak.sh/mikluko/jmap"
 
 // The Core/echo method
 type Echo struct {

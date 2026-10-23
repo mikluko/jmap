@@ -1,8 +1,8 @@
 package mdn
 
 import (
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/mail"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/mail"
 )
 
 // Sends an RFC5322 message from an MDN object

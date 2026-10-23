@@ -1,7 +1,7 @@
 package subscription
 
 import (
-	"github.com/mikluko/jmap"
+	"sarak.sh/mikluko/jmap"
 )
 
 // Modify push subscription details

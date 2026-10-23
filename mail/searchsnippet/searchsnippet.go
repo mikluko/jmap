@@ -1,6 +1,6 @@
 package searchsnippet
 
-import "github.com/mikluko/jmap"
+import "sarak.sh/mikluko/jmap"
 
 func init() {
 	jmap.RegisterMethod("SearchSnippet/get", newGetResponse)

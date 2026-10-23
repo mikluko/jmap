@@ -1,8 +1,8 @@
 package email
 
 import (
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/mail"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/mail"
 )
 
 // Copy messages from one account to another

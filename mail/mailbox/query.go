@@ -1,8 +1,8 @@
 package mailbox
 
 import (
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/mail"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/mail"
 )
 
 // Get a list of mailbox IDs based on filter and sort criteria

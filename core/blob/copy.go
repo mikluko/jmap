@@ -1,7 +1,7 @@
 package blob
 
 import (
-	"github.com/mikluko/jmap"
+	"sarak.sh/mikluko/jmap"
 )
 
 // Copy a binary blob from one account to another

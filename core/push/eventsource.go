@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/mikluko/jmap"
+	"sarak.sh/mikluko/jmap"
 )
 
 // A subscription to an event stream

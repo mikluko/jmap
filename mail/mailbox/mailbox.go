@@ -1,6 +1,6 @@
 package mailbox
 
-import "github.com/mikluko/jmap"
+import "sarak.sh/mikluko/jmap"
 
 func init() {
 	jmap.RegisterMethod("Mailbox/get", newGetResponse)

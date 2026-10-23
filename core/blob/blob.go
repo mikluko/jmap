@@ -1,6 +1,6 @@
 package blob
 
-import "github.com/mikluko/jmap"
+import "sarak.sh/mikluko/jmap"
 
 func init() {
 	jmap.RegisterMethod("Blob/copy", newCopyResponse)

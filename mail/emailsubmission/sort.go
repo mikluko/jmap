@@ -1,6 +1,6 @@
 package emailsubmission
 
-import "github.com/mikluko/jmap"
+import "sarak.sh/mikluko/jmap"
 
 type SortComparator struct {
 	Property string `json:"property,omitempty"`

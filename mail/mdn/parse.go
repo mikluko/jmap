@@ -1,7 +1,7 @@
 package mdn
 
 import (
-	"github.com/mikluko/jmap"
+	"sarak.sh/mikluko/jmap"
 )
 
 // Parse blobs as messages in the style of RFC5322 to get MDN objects

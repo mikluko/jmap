@@ -1,8 +1,8 @@
 package identity
 
 import (
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/mail/emailsubmission"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/mail/emailsubmission"
 )
 
 // Get details identity details

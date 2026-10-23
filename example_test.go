@@ -3,11 +3,11 @@ package jmap_test
 import (
 	"fmt"
 
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/core/push"
-	"github.com/mikluko/jmap/mail"
-	"github.com/mikluko/jmap/mail/email"
-	"github.com/mikluko/jmap/mail/mailbox"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/core/push"
+	"sarak.sh/mikluko/jmap/mail"
+	"sarak.sh/mikluko/jmap/mail/email"
+	"sarak.sh/mikluko/jmap/mail/mailbox"
 )
 
 // Basic usage of the client, with chaining of methods

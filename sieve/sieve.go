@@ -1,6 +1,6 @@
 package sieve
 
-import "github.com/mikluko/jmap"
+import "sarak.sh/mikluko/jmap"
 
 const URI jmap.URI = "urn:ietf:params:jmap:sieve"
 
@@ -36,5 +36,5 @@ type Capability struct {
 	ExternalLists []string `json:"externalLists"`
 }
 
-func (c *Capability) URI() jmap.URI       { return URI }
+func (c *Capability) URI() jmap.URI        { return URI }
 func (c *Capability) New() jmap.Capability { return &Capability{} }

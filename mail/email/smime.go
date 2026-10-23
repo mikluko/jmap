@@ -1,6 +1,6 @@
 package email
 
-import "github.com/mikluko/jmap"
+import "sarak.sh/mikluko/jmap"
 
 const SMIMEVerify jmap.URI = "urn:ietf:params:jmap:smimeverify"
 

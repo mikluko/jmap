@@ -1,8 +1,8 @@
 package emailsubmission
 
 import (
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/mail"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/mail"
 )
 
 // List email submission IDs based on filter and sort criteria

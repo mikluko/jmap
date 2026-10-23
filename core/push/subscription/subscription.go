@@ -3,7 +3,7 @@ package subscription
 import (
 	"time"
 
-	"github.com/mikluko/jmap"
+	"sarak.sh/mikluko/jmap"
 )
 
 func init() {

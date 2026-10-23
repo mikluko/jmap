@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/mail"
 	"github.com/stretchr/testify/assert"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/mail"
 )
 
 func TestChanges(t *testing.T) {

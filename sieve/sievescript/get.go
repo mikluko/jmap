@@ -1,14 +1,14 @@
 package sievescript
 
 import (
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/sieve"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/sieve"
 )
 
 type Get struct {
-	Account             jmap.ID              `json:"accountId,omitempty"`
-	IDs                 []jmap.ID            `json:"ids,omitempty"`
-	Properties          []string             `json:"properties,omitempty"`
+	Account             jmap.ID               `json:"accountId,omitempty"`
+	IDs                 []jmap.ID             `json:"ids,omitempty"`
+	Properties          []string              `json:"properties,omitempty"`
 	ReferenceIDs        *jmap.ResultReference `json:"#ids,omitempty"`
 	ReferenceProperties *jmap.ResultReference `json:"#properties,omitempty"`
 }

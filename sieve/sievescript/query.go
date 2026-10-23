@@ -1,8 +1,8 @@
 package sievescript
 
 import (
-	"github.com/mikluko/jmap"
-	"github.com/mikluko/jmap/sieve"
+	"sarak.sh/mikluko/jmap"
+	"sarak.sh/mikluko/jmap/sieve"
 )
 
 type Query struct {

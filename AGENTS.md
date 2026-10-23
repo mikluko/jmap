@@ -4,7 +4,7 @@ This file provides guidance to AI coding agents when working with code in this r
 
 ## Overview
 
-Fork of `git.sr.ht/~rockorager/go-jmap` — a Go client library for the JMAP protocol (JSON Meta Application Protocol). The go module path still references the upstream sourcehut path.
+Fork of `git.sr.ht/~rockorager/go-jmap` — a Go client library for the JMAP protocol (JSON Meta Application Protocol). The module path is `sarak.sh/mikluko/jmap`; the repository is `https://forge.sarak.sh/mikluko/jmap`, mirrored to `github.com/mikluko/jmap`.
 
 Implements: Core (RFC 8620), Mail (RFC 8621), MDN (RFC 9007), S/MIME (RFC 9219). WebSocket (RFC 8887) is not started.
 
