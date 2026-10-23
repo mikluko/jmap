@@ -1,0 +1,104 @@
+name: Roll release
+run-name: ${{ github.event_name == 'push' && format('Releasing {0}', github.ref_name) || format('Dry run of a release from {0}', github.ref_name) }}
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-roll
+  cancel-in-progress: false
+
+env:
+  MODULE: sarak.sh/mikluko/jmap
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      due: ${{ steps.version.outputs.due }}
+      tag: v${{ steps.version.outputs.version }}
+      prerelease: ${{ steps.changelog.outputs.prerelease }}
+      notes: ${{ steps.changelog.outputs.notes }}
+      publish: ${{ steps.version.outputs.publish }}
+    steps:
+      - uses: https://github.com/actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - id: changelog
+        uses: https://forge.sarak.sh/actions/changelog@v1
+        with:
+          due-prerelease: true
+      - id: version
+        name: Version
+        env:
+          EVENT: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          NEWEST: ${{ steps.changelog.outputs.version }}
+          DUE: ${{ steps.changelog.outputs.due }}
+          DUE_REASON: ${{ steps.changelog.outputs['due-reason'] }}
+        run: |
+          due=$DUE
+          reason=$DUE_REASON
+          version=$NEWEST
+          publish=false
+          if [ "$EVENT" = push ]; then
+            version=${REF_NAME#v}
+            if [ -z "$NEWEST" ] || [ "$REF_NAME" != "v$NEWEST" ]; then
+              echo "::error::tag $REF_NAME is not the newest version CHANGELOG.md names, ${NEWEST:-which is none}"
+              exit 1
+            fi
+            due=true
+            publish=true
+            reason="$REF_NAME is the newest version CHANGELOG.md names"
+          fi
+          echo "::notice::${reason:-$version is due}"
+          {
+            echo "due=$due"
+            echo "version=$version"
+            echo "publish=$publish"
+          } >>"$GITHUB_OUTPUT"
+
+  ci:
+    needs: plan
+    if: needs.plan.outputs.due == 'true'
+    uses: ./.forgejo/workflows/ci.yaml
+
+  release:
+    needs: [plan, ci]
+    if: ${{ !cancelled() && !failure() && needs.plan.outputs.due == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Notes
+        env:
+          TAG: ${{ needs.plan.outputs.tag }}
+          NOTES: ${{ needs.plan.outputs.notes }}
+        run: |
+          printf '%s\n' "$NOTES" >"$RUNNER_TEMP/notes.md"
+          echo "release $TAG from $GITHUB_SHA:"
+          cat "$RUNNER_TEMP/notes.md"
+      - name: Release
+        if: needs.plan.outputs.publish == 'true'
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ needs.plan.outputs.tag }}
+          PRERELEASE: ${{ needs.plan.outputs.prerelease }}
+        run: |
+          jq -n --arg tag "$TAG" --rawfile body "$RUNNER_TEMP/notes.md" --argjson pre "$PRERELEASE" \
+            '{tag_name: $tag, name: $tag, body: $body, prerelease: $pre}' |
+            curl --fail-with-body -sS -X POST \
+              -H "Authorization: token $TOKEN" -H 'Content-Type: application/json' \
+              -d @- "$GITHUB_SERVER_URL/api/v1/repos/$GITHUB_REPOSITORY/releases"
+      # The proxy fetches a version on first request; asking now lists it on pkg.go.dev.
+      - name: Announce to the Go proxy
+        if: needs.plan.outputs.publish == 'true'
+        env:
+          TAG: ${{ needs.plan.outputs.tag }}
+        run: curl --fail-with-body -sS "https://proxy.golang.org/$MODULE/@v/$TAG.info"

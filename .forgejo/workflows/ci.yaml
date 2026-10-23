@@ -1,0 +1,33 @@
+name: CI
+
+# On main, ci runs only as the first job of release-cut.yaml.
+on:
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: https://github.com/actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: https://github.com/actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - run: test -z "$(gofmt -l .)"
+      - run: go vet ./...
+      - run: go test ./...
+
+  changelog:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: https://github.com/actions/checkout@v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: https://forge.sarak.sh/actions/changelog@v1
