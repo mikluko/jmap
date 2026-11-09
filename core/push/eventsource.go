@@ -2,13 +2,24 @@ package push
 
 import (
 	"bufio"
+	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
 	"sarak.sh/mikluko/jmap"
+)
+
+var (
+	// ErrClosed is ListenContext's report that the server ended the stream.
+	ErrClosed = errors.New("push: event stream closed")
+	// ErrSilent is ListenContext's report that the stream sent nothing,
+	// not even a ping, for twice the Ping interval.
+	ErrSilent = errors.New("push: event stream went silent")
 )
 
 // A subscription to an event stream
@@ -30,12 +41,23 @@ type EventSource struct {
 	// Whether to close the connection after a state event
 	CloseAfterState bool
 
+	// OnConnect, if set, is called by ListenContext once the server has
+	// accepted the stream and before the first event is read. Changes made
+	// before the stream opened reach no Handler, so a client that keeps
+	// state catches up here.
+	OnConnect func()
+
 	// The response of the request.
 	resp *http.Response
 }
 
 // Connect to the server
-func (e *EventSource) connect() error {
+func (e *EventSource) connect(ctx context.Context) error {
+	if e.Client.Session == nil {
+		if err := e.Client.Authenticate(); err != nil {
+			return err
+		}
+	}
 	// Create the URL for the subscription
 	url, err := url.Parse(e.Client.Session.EventSourceURL)
 	if err != nil {
@@ -68,11 +90,17 @@ func (e *EventSource) connect() error {
 	url.RawQuery = q.Encode()
 
 	// make the request
-	e.resp, err = e.Client.HttpClient.Get(url.String())
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url.String(), nil)
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Accept", "text/event-stream")
+	e.resp, err = e.Client.HttpClient.Do(req)
 	if err != nil {
 		return err
 	}
 	if e.resp.StatusCode != 200 {
+		e.resp.Body.Close()
 		return fmt.Errorf("invalid request, response code: %d", e.resp.StatusCode)
 	}
 	return nil
@@ -82,14 +110,42 @@ func (e *EventSource) connect() error {
 // and return when the source has been disconnected or closed via a call to
 // Close()
 func (e *EventSource) Listen() error {
-	err := e.connect()
-	if err != nil {
+	err := e.ListenContext(context.Background())
+	if errors.Is(err, ErrClosed) {
+		return nil
+	}
+	return err
+}
+
+// ListenContext listens like Listen, until ctx ends or the stream does. It
+// returns ctx's error, ErrClosed when the server or Close ends the stream,
+// or ErrSilent when Ping is set and nothing arrives for twice its interval.
+func (e *EventSource) ListenContext(ctx context.Context) error {
+	parent := ctx
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+	if err := e.connect(ctx); err != nil {
 		return err
 	}
+	defer e.resp.Body.Close()
+
+	alive := make(chan struct{}, 1)
+	if e.Ping > 0 {
+		go watchdog(ctx, cancel, alive, 2*time.Duration(e.Ping)*time.Second)
+	}
+	if e.OnConnect != nil {
+		e.OnConnect()
+	}
+
 	scanner := bufio.NewScanner(e.resp.Body)
+	scanner.Buffer(make([]byte, 64*1024), 4*1024*1024)
 	var event string
 
 	for scanner.Scan() {
+		select {
+		case alive <- struct{}{}:
+		default:
+		}
 		// https://html.spec.whatwg.org/multipage/server-sent-events.html#event-stream-interpretation
 		line := scanner.Text()
 		switch {
@@ -118,7 +174,30 @@ func (e *EventSource) Listen() error {
 			}
 		}
 	}
-	return nil
+	switch {
+	case parent.Err() != nil:
+		return parent.Err()
+	case ctx.Err() != nil:
+		return ErrSilent
+	}
+	return ErrClosed
+}
+
+// watchdog cancels when alive receives nothing for silence.
+func watchdog(ctx context.Context, cancel func(), alive <-chan struct{}, silence time.Duration) {
+	t := time.NewTimer(silence)
+	defer t.Stop()
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case <-alive:
+			t.Reset(silence)
+		case <-t.C:
+			cancel()
+			return
+		}
+	}
 }
 
 // Closes the stream
