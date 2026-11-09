@@ -95,6 +95,11 @@ func (e *EventSource) connect(ctx context.Context) error {
 		return err
 	}
 	req.Header.Set("Accept", "text/event-stream")
+	// A compressed stream reaches the client only in compressor-sized
+	// chunks: Stalwart 1.0.3 sends not even the response headers until the
+	// first event. Naming the encoding also stops Go's transport from
+	// asking for gzip.
+	req.Header.Set("Accept-Encoding", "identity")
 	e.resp, err = e.Client.HttpClient.Do(req)
 	if err != nil {
 		return err

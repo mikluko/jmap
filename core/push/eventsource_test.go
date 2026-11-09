@@ -20,6 +20,7 @@ func stream(t *testing.T, hold time.Duration, events ...string) *jmap.Client {
 	t.Helper()
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, "Email", r.URL.Query().Get("types"))
+		assert.Equal(t, "identity", r.Header.Get("Accept-Encoding"))
 		w.Header().Set("Content-Type", "text/event-stream")
 		for _, e := range events {
 			fmt.Fprint(w, e)
