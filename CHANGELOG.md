@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.28.0] - 2026-11-09
+
+### Added
+
+- `push.EventSource.ListenContext` listens until its context ends, and reports how the stream ended: `push.ErrClosed`, or `push.ErrSilent` when nothing arrives for twice the `Ping` interval.
+- `push.EventSource.OnConnect` is called once the server accepts the stream, before the first event.
+
+### Fixed
+
+- `push.EventSource.Listen` fetches the session first when the client has none, rather than panicking.
+- `push.EventSource.Listen` reads events larger than 64 KiB.
+
 ## [0.27.0] - 2026-10-23
 
 ### Changed
@@ -17,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The last version published as `github.com/mikluko/jmap`.
 
-[Unreleased]: https://forge.sarak.sh/mikluko/jmap/compare/v0.27.0...HEAD
+[Unreleased]: https://forge.sarak.sh/mikluko/jmap/compare/v0.28.0...HEAD
+[0.28.0]: https://forge.sarak.sh/mikluko/jmap/compare/v0.27.0...v0.28.0
 [0.27.0]: https://forge.sarak.sh/mikluko/jmap/compare/v0.26.0...v0.27.0
 [0.26.0]: https://forge.sarak.sh/mikluko/jmap/releases/tag/v0.26.0
