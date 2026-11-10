@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `blob.CopyResponse.Copied` decodes the `copied` property of a Blob/copy response (RFC 8620 section 6.3). It was tagged `blobIds`, so it was never filled.
+
 ## [0.28.1] - 2026-11-09
 
 ### Fixed
